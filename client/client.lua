@@ -2,7 +2,7 @@ local QBCore = exports['qb-core']:GetCoreObject()
 
 CreateThread(function()
     for _, location in pairs(Rise.KaraParaNoktalari) do
-        local model = GetHashKey(Rise.NpcModeli)
+        local model = GetHashKey(Rise.NPC.Model)
         RequestModel(model)
         while not HasModelLoaded(model) do
             Wait(10)
@@ -11,15 +11,15 @@ CreateThread(function()
         local npc = CreatePed(4, model, location.coords.x, location.coords.y, location.coords.z - 1.0, location.coords.w, false, true)
         SetEntityInvincible(npc, true)
         SetBlockingOfNonTemporaryEvents(npc, true)
-        TaskStartScenarioInPlace(npc, Rise.NpcAnimasyonu, 0, true)
+        TaskStartScenarioInPlace(npc, Rise.NPC.Animasyonu, 0, true)
         FreezeEntityPosition(npc, true)
-        exports['qb-target']:AddTargetEntity(npc, {
+        exports[Rise.Target.Export]:AddTargetEntity(npc, {
             options = {
                 {
                     type = "client",
                     event = "RiseDev:openMenu",
-                    icon = Rise.TargetIcon,
-                    label = Rise.targettegorunenyazi,
+                    icon = Rise.Target.Icon,
+                    label = Rise.Target.LabelYazi,
                     job = location.jobs
                 }
             },
@@ -29,27 +29,27 @@ CreateThread(function()
 end)
 
 RegisterNetEvent('RiseDev:openMenu', function()
-    exports['qb-menu']:openMenu({
+    exports[Rise.Menu.Export]:openMenu({
         {
-            header = Rise.qbmenuheader,
+            header = Rise.Menu.Header,
             isMenuHeader = true
         },
         {
-            header = "📦 Depoyu Aç",
-            txt = "Depoya erişim sağla.",
+            header = Rise.Menu.DepoHeader,
+            txt = Rise.Menu.DepoTXT,
             params = {
                 event = "RiseDev:openStash"
             }
         },
         {
-            header = "💰 Para Boz",
-            txt = "Kara paranı nakite çevir.",
+            header = Rise.Menu.BozHeader,
+            txt = Rise.Menu.BozTXT,
             params = {
                 event = "RiseDev:bozmaInput"
             }
         },
         {
-            header = "⬅️ Kapat",
+            header = Rise.Menu.Kapat,
             params = {
                 event = "qb-menu:closeMenu"
             }
@@ -59,19 +59,19 @@ end)
 
 RegisterNetEvent('RiseDev:openStash', function()
     TriggerServerEvent("inventory:server:OpenInventory", "stash", "karaParaDeposu", {
-        maxweight = 4000000,
-        slots = 150,
+        maxweight = Rise.Depo.Agirlik,
+        slots = Rise.Depo.Slot,
     })
     TriggerEvent("inventory:client:SetCurrentStash", "karaParaDeposu")
 end)
 
 RegisterNetEvent('RiseDev:bozmaInput', function()
-    local dialog = exports['qb-input']:ShowInput({
-        header = Rise.qbinputheader,
-        submitText = Rise.qbinputsubmit,
+    local dialog = exports[Rise.Input.Export]:ShowInput({
+        header = Rise.Input.Header,
+        submitText = Rise.Input.Submit,
         inputs = {
             {
-                text = Rise.qbinputlabel,
+                text = Rise.Input.Label,
                 name = "amount",
                 type = "number",
                 isRequired = true
@@ -82,7 +82,7 @@ RegisterNetEvent('RiseDev:bozmaInput', function()
     if dialog and dialog.amount then
         TriggerServerEvent('RiseDev:bozKaraPara', tonumber(dialog.amount))
     else
-        QBCore.Functions.Notify("Üzerinizde kara para bulunmuyor!", "error")
+        QBCore.Functions.Notify(Locale.Notify.Fakir, "error")
     end
 end)
 
@@ -145,7 +145,7 @@ function OpenElevatorMenu(elevatorName, elevatorData)
     for floorName, coords in pairs(elevatorData.floors) do
         table.insert(menuItems, {
             header = floorName,
-            txt = "Bu kata git",
+            txt = Rise.Asansor.MenuTXT,
             params = {
                 event = "RiseDev:useElevator",
                 args = {
@@ -158,13 +158,13 @@ function OpenElevatorMenu(elevatorName, elevatorData)
     end
 
     table.insert(menuItems, {
-        header = "⬅️ Kapat",
+        header = Rise.Asansor.Header,
         params = {
             event = "qb-menu:closeMenu"
         }
     })
 
-    exports['qb-menu']:openMenu(menuItems)
+    exports[Rise.Asansor.Export]:openMenu(menuItems)
 end
 
 RegisterNetEvent('RiseDev:useElevator', function(data)
@@ -174,7 +174,7 @@ RegisterNetEvent('RiseDev:useElevator', function(data)
         PlaySoundFrontend(-1, "Zoom_In", "DLC_HEIST_PLANNING_BOARD_SOUNDS", 1)
     end
 
-    QBCore.Functions.Progressbar("elevator_travel", 
+    QBCore.Functions.Progressbar("beqeendAsansorKeeee", 
         Rise.ElevatorSettings.progressBar.text, 
         Rise.ElevatorSettings.progressBar.duration, 
         false, true, {
