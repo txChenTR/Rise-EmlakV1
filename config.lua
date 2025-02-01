@@ -15,24 +15,54 @@ Rise.KaraParaNoktalari = {
     }
 }
 
-Rise.NpcModeli = 'cs_barry'
-Rise.NpcAnimasyonu = 'WORLD_HUMAN_AA_TABLET'
-Rise.TargetIcon = 'fas fa-money-bill-wave'
-Rise.targettegorunenyazi = 'Paraları Akla'
-Rise.qbmenuheader = 'Rise Emlak Sistemi'
-Rise.qbinputheader = 'Rise Karaparalarını Boz'
-Rise.qbinputlabel = 'Bozulacak Miktar'
-Rise.qbinputsubmit = 'Boz'
-Rise.webhook = 'webhokgir'
-Rise.BotAdii = 'RiseDev'
+Rise.ParaItem = {
+    KaraPara = 'karapara',
+    Para = 'money',
+}
+Rise.NPC = {
+    Model = 'cs_barry',
+    Animasyonu = 'WORLD_HUMAN_AA_TABLET',
+}
+
+
+Rise.Target = {
+    Export = 'qb-target',
+    Icon = 'fas fa-money-bill-wave',
+    LabelYazi = 'Paraları Akla'
+}
+
+Rise.Menu = {
+    Export = 'qb-menu',
+    Header = 'Rise Emlak Sistemi',
+    DepoHeader = '📦 Depoyu Aç',
+    DepoTXT = 'Depoya erişim sağla.',
+    BozHeader = '💰 Para Boz',
+    BozTXT = 'Kara paranı nakite çevir.',
+    Kapat = '⬅️ Kapat',
+}
+
+Rise.Depo = {
+    Agirlik = 4000000,
+    Slot = 150,
+}
+
+Rise.Input = {
+    Export = 'qb-input',
+    Header = 'Rise Karaparalarını Boz',
+    Submit = 'Boz',
+    Label = 'Bozulacak Miktar',
+}
+
+
+
 
 Rise.Elevators = {
     ["Emlak Asansörü"] = {
         menuLabel = "Emlak Asansörü",
         marker = {
-            type = 1,    -- Marker tipi
-            size = 1.0,  -- Marker boyutu
-            color = {    -- Marker rengi (RGB)
+            type = 1,   
+            size = 1.0, 
+            color = {   
                 r = 0,
                 g = 157,
                 b = 255,
@@ -68,14 +98,19 @@ Rise.Elevators = {
 }
 
 Rise.ElevatorSettings = {
-    distance = 4.0,          -- asansör kullanımı mesafesi
-    notifyType = "primary", -- bildirim tipi    
-    sound = true,            -- ses
-    helpText = "[E] Asansörü kullan", -- yardım metni
+    distance = 4.0,         
+    notifyType = "primary", 
+    sound = true,           
+    helpText = "[E] Asansörü kullan",
     progressBar = {
-        duration = 3000,--asansör kullanımı süresi
-        text = "Asansöre biniyorsun...",  -- asansöre biniyor mesajı    
-        cancelText = "Asansör kullanımı iptal edildi"  -- Asansör iptal edildi mesajı
-
+        duration = 3000,
+        text = "Asansöre biniyorsun...",  
+        cancelText = "Asansör kullanımı iptal edildi"
     }
+}
+
+Rise.Asansor = {
+    MenuTXT = "Bu kata git",
+    Header = "⬅️ Kapat",
+    Export = 'qb-menu'
 }
